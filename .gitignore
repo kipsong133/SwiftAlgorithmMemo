@@ -120,6 +120,9 @@ iOSInjectionProject/
 
 
 *.md
+Queue.md
+/Queue.md
+
 
 ## Gcc Patch
 /*.gcno

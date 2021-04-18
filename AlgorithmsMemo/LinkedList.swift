@@ -100,7 +100,7 @@ public struct LinkedList<Value> {
     public mutating func insert(_ value: Value,
                                 after node: Node<Value>)
                                 -> Node<Value> {
-        /// tail에 값이
+        /// tail에 값이s
         guard tail !== node else {
             append(value)
             return tail!

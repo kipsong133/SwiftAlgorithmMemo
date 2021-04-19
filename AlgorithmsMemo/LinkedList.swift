@@ -100,7 +100,7 @@ public struct LinkedList<Value> {
     public mutating func insert(_ value: Value,
                                 after node: Node<Value>)
                                 -> Node<Value> {
-        /// tail에 값이s
+        // tail에 값을 업데이트  해주는 guard문 이다.
         guard tail !== node else {
             append(value)
             return tail!
@@ -109,6 +109,51 @@ public struct LinkedList<Value> {
         node.next = Node(value: value, next: node.next)
         return node.next!
     }
+    
+    @discardableResult
+    public mutating func pop() -> Value? {
+        defer {
+            head = head?.next
+            if isEmpty {
+                tail = nil
+            }
+        }
+        return head?.value
+    }
+    
+    @discardableResult
+    public mutating func removeLast() -> Value? {
+        // 1
+        // 만약 'head'가 값이 없다면 제거할 값이 없는 경우이므로 return nil을 한다.
+        guard let head = head else {
+            return nil
+        }
+        
+        // 2
+        // head.next == nil이라면 리스트 자체에 노드가 1 개 밖에 없는 경우이다. 'removeLast'는 기능상 pop과 동일해질 것이다. pop은 head와 tail을 업데이트 해주므로, 이 일을 pop()을 실행하므로써 대체한다.
+        guard head.next != nil else {
+            return pop()
+        }
+        
+        // 3
+        // 'current.next'가 값이 없을 때 까지, 노드를 찾을 것이다. 그러다가 current.next == nil이 될 때 while 문이 종료될 것이다.
+        var prev = head
+        var current = head
+        
+        while let next = current.next {
+            prev = current
+            current = next
+        }
+        
+        // 4
+        // current가 nil인 순간==마지막노드인순간, prev의 next 값을 nil을 넣는다. 그리고 tail에 prev를 넣어주고, current.value==next.value를 리턴한다.
+        prev.next = nil
+        tail = prev
+        return current.value
+    }
+    
+    
+    // 
     
     
 }
